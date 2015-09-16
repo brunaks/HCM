@@ -1,11 +1,11 @@
 package bmw;
 
 public class CreateTimeCard implements UseCase {
-    private final String employeeId;
-    private final int hoursWorked;
-    private final int day;
-    private final int month;
-    private final int year;
+    private String employeeId;
+    private int hoursWorked;
+    private int day;
+    private int month;
+    private int year;
     private Repository repository;
 
     public CreateTimeCard(String employeeId, int hoursWorked, int day, int month, int year, Repository repository) {

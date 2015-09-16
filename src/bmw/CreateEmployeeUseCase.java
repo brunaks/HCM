@@ -1,7 +1,6 @@
 package bmw;
 
 public class CreateEmployeeUseCase implements UseCase {
-
     private double hourlyRate;
     private String id;
     private Repository repository;

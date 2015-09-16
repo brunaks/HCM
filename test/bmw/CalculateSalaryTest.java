@@ -12,7 +12,7 @@ public class CalculateSalaryTest {
 
     @Before
     public void setUp() throws Exception {
-        repository = new Repository();
+        repository = new InMemoryRepository();
     }
 
     @Test
@@ -25,20 +25,20 @@ public class CalculateSalaryTest {
     @Test
     public void employeeHasOneTimeCard_salaryMustBeEightHoursWorthOfMoney() {
         String id = givenEmployee(22.73);
-        givenTimeCard(id, 8, 01, 01, 2015);
+        givenTimeCard(id, 8, 1, 1, 2015);
         whenCalculatingSalaryOf(id, 1, 2015);
-        thenTheSalaryShouldBe(8*22.73);
-    }
-
-    private void givenTimeCard(String id, int hoursWorked, int day, int month, int year) {
-        createTimeCard = new CreateTimeCard(id, hoursWorked, day, month, year, repository);
-        createTimeCard.execute();
+        thenTheSalaryShouldBe(8 * 22.73);
     }
 
     private String givenEmployee(double hourlyRate) {
         createEmployee = new CreateEmployeeUseCase(hourlyRate, repository);
         createEmployee.execute();
         return createEmployee.getEmployeeId();
+    }
+
+    private void givenTimeCard(String id, int hoursWorked, int day, int month, int year) {
+        createTimeCard = new CreateTimeCard(id, hoursWorked, day, month, year, repository);
+        createTimeCard.execute();
     }
 
     private void whenCalculatingSalaryOf(String employeeId, int month, int year) {

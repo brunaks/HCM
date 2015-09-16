@@ -1,13 +1,9 @@
 package bmw;
 
-import java.util.List;
-import java.util.function.BinaryOperator;
-
 public class CalculateSalaryUseCase implements UseCase {
-
-    private final String employeeId;
+    private String employeeId;
     private int year;
-    private final int month;
+    private int month;
     private Repository repository;
     private double salary;
 
@@ -20,11 +16,10 @@ public class CalculateSalaryUseCase implements UseCase {
 
     public void execute() {
         double hourlyRate = repository.getHourlyRate(employeeId);
-        List<Integer> hoursWorked = repository.getHoursWorked(employeeId, year, month);
+        Iterable<Integer> hoursWorked = repository.getHoursWorked(employeeId, year, month);
         int totalWorkedHours = 0;
-        for(int item : hoursWorked){
+        for (int item : hoursWorked)
             totalWorkedHours += item;
-        }
         salary = totalWorkedHours * hourlyRate;
     }
 

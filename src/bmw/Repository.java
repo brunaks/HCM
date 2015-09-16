@@ -1,41 +1,13 @@
 package bmw;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface Repository {
+    String createId();
 
-public class Repository {
-    private static int incrementalId;
-    private ArrayList<Employee> employeesSaved = new ArrayList<Employee>();
+    void saveEmployee(String employeeId, double hourlyRate);
 
-    public String createId() {
-        return String.valueOf(++incrementalId);
-    }
+    void addTimeCardToEmployee(String employeeId, int year, int month, int day, int hoursWorked);
 
-    public void saveEmployee(String employeeId, double hourlyRate) {
-        Employee employee = new Employee(employeeId);
-        employee.setHourlyRate(hourlyRate);
-        employeesSaved.add(employee);
-    }
+    double getHourlyRate(String employeeId);
 
-    public void addTimeCardToEmployee(String employeeId, int year, int month, int day, int hoursWorked) {
-        Employee employee = getEmployeeById(employeeId);
-        if (employee != null) {employee.addWorkedHours(hoursWorked); }
-    }
-
-    private Employee getEmployeeById(String employeeId) {
-        for (Employee employee: employeesSaved) {
-            if (employee.getId().equalsIgnoreCase(employeeId)) {
-                return employee;
-            }
-        }
-        return null;
-    }
-
-    public double getHourlyRate(String employeeId) {
-        return getEmployeeById(employeeId).getHourlyRate();
-    }
-
-    public List<Integer> getHoursWorked(String employeeId, int year, int month) {
-        return getEmployeeById(employeeId).workedHours;
-    }
+    Iterable<Integer> getHoursWorked(String employeeId, int year, int month);
 }
