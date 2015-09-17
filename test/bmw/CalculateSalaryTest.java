@@ -23,11 +23,21 @@ public class CalculateSalaryTest {
     }
 
     @Test
-    public void employeeHasOneTimeCard_salaryMustBeEightHoursWorthOfMoney() {
+    public void employeeHasThreeTimeCards_salaryMustBeEquivalent() {
         String id = givenEmployee(22.73);
         givenTimeCard(id, 8, 1, 1, 2015);
+        givenTimeCard(id, 8, 2, 1, 2015);
+        givenTimeCard(id, 8, 3, 1, 2015);
         whenCalculatingSalaryOf(id, 1, 2015);
-        thenTheSalaryShouldBe(8 * 22.73);
+        thenTheSalaryShouldBe(24 * 22.73);
+    }
+
+    @Test
+    public void employeeWithExtraHour_theExtraHourIsPaidTimeAndAHalf() {
+        String id = givenEmployee(22.73);
+        givenTimeCard(id, 9, 1, 1, 2015);
+        whenCalculatingSalaryOf(id, 1, 2015);
+        thenTheSalaryShouldBe((8 * 22.73) + (1.5 * 22.73));
     }
 
     private String givenEmployee(double hourlyRate) {
