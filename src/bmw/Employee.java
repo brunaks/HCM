@@ -6,27 +6,33 @@ import java.util.List;
 public class Employee {
     public static final double EXTRA_PAY_RATE = 1.5;
     public static final int MAX_NORMAL_HOURS = 8;
+    private String name;
     private String id;
     private double hourlyRate;
     List<Integer> workedHours;
 
     public Employee(String employeeId) {
-        this(employeeId, 0.0, new ArrayList<>());
+        this(employeeId, "", 0.0, new ArrayList<>());
     }
 
-    private Employee(String id, double hourlyRate, List<Integer> workedHours) {
+    private Employee(String id, String name, double hourlyRate, List<Integer> workedHours) {
         this.id = id;
+        this.name = name;
         this.hourlyRate = hourlyRate;
         this.workedHours = new ArrayList<>();
         this.workedHours.addAll(workedHours);
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public double getHourlyRate() {
-        return hourlyRate;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setHourlyRate(double hourlyRate) {
@@ -37,15 +43,8 @@ public class Employee {
         workedHours.add(hoursWorked);
     }
 
-    public int getTotalWorkedHours() {
-        int totalWorkedHours = 0;
-        for (int h : workedHours)
-            totalWorkedHours += h;
-        return totalWorkedHours;
-    }
-
     public Employee copy() {
-        return new Employee(id, hourlyRate, workedHours);
+        return new Employee(id, name, hourlyRate, workedHours);
     }
 
     double calculateSalary() {

@@ -1,6 +1,5 @@
 package bmw;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +19,6 @@ public class EmployeeRepositoryTest {
         Employee employee = new Employee("0001");
         repository.save(employee);
         Employee employeeRetrieved = repository.getById("0001");
-        Assert.assertNotNull(employeeRetrieved);
         assertEquals("0001", employeeRetrieved.getId());
     }
 
@@ -28,11 +26,10 @@ public class EmployeeRepositoryTest {
     public void changesInTheEmployeeBeforeSaveAreNotReflectedInTheRepository() {
         Employee employee = new Employee("0001");
         repository.save(employee);
-        employee.addWorkedHours(8);
+        employee.setName("Name 1");
 
         Employee employeeRetrieved = repository.getById("0001");
-        Assert.assertNotNull(employeeRetrieved);
-        assertEquals(0, employeeRetrieved.getTotalWorkedHours());
+        assertEquals("", employeeRetrieved.getName());
     }
 
     @Test
@@ -41,22 +38,22 @@ public class EmployeeRepositoryTest {
         repository.save(employee);
 
         Employee employeeRetrievedBefore = repository.getById("0001");
-        employeeRetrievedBefore.addWorkedHours(8);
+        employeeRetrievedBefore.setName("Name 1");
 
         Employee employeeRetrievedAfter = repository.getById("0001");
-        assertEquals(0, employeeRetrievedAfter.getTotalWorkedHours());
+        assertEquals("", employeeRetrievedAfter.getName());
     }
 
     @Test
     public void changingAnEmployeeAndSavingItAgain_mustReturnTheUpdatedEmployee() {
         Employee employee = new Employee("0001");
-        employee.setHourlyRate(10.0);
+        employee.setName("Name 1");
         repository.save(employee);
 
-        employee.setHourlyRate(20.0);
+        employee.setName("Name 2");
         repository.save(employee);
 
         Employee employeeRetrieved = repository.getById("0001");
-        assertEquals(20.0, employeeRetrieved.getHourlyRate(), .001);
+        assertEquals("Name 2", employeeRetrieved.getName());
     }
 }
