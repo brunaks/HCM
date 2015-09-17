@@ -57,7 +57,6 @@ public class Employee {
     private double calculateDaySalary(int hoursWorked) {
         return hourlyRate * toPaidHours(hoursWorked);
     }
-
     private double toPaidHours(int hoursWorked) {
         if (hasExtraHours(hoursWorked))
             return applyExtraPayRate(hoursWorked);
