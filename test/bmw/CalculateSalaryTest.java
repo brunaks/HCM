@@ -8,11 +8,11 @@ public class CalculateSalaryTest {
     CreateEmployeeUseCase createEmployee;
     CalculateSalaryUseCase calculateSalary;
     CreateTimeCard createTimeCard;
-    Repository repository;
+    EmployeeRepository repository;
 
     @Before
     public void setUp() throws Exception {
-        repository = new InMemoryRepository();
+        repository = new InMemoryEmployeeRepository();
     }
 
     @Test

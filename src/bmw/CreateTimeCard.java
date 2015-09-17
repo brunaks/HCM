@@ -6,9 +6,9 @@ public class CreateTimeCard implements UseCase {
     private int day;
     private int month;
     private int year;
-    private Repository repository;
+    private EmployeeRepository repository;
 
-    public CreateTimeCard(String employeeId, int hoursWorked, int day, int month, int year, Repository repository) {
+    public CreateTimeCard(String employeeId, int hoursWorked, int day, int month, int year, EmployeeRepository repository) {
         this.employeeId = employeeId;
         this.hoursWorked = hoursWorked;
         this.day = day;
@@ -18,6 +18,7 @@ public class CreateTimeCard implements UseCase {
     }
 
     public void execute() {
-        repository.addTimeCardToEmployee(employeeId, year, month, day, hoursWorked);
+        Employee employee = repository.getById(employeeId);
+        employee.addWorkedHours(hoursWorked);
     }
 }

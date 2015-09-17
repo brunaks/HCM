@@ -4,10 +4,10 @@ public class CalculateSalaryUseCase implements UseCase {
     private String employeeId;
     private int year;
     private int month;
-    private Repository repository;
+    private EmployeeRepository repository;
     private double salary;
 
-    public CalculateSalaryUseCase(String employeeId, int year, int month, Repository repository) {
+    public CalculateSalaryUseCase(String employeeId, int year, int month, EmployeeRepository repository) {
         this.employeeId = employeeId;
         this.year = year;
         this.month = month;
@@ -15,12 +15,8 @@ public class CalculateSalaryUseCase implements UseCase {
     }
 
     public void execute() {
-        double hourlyRate = repository.getHourlyRate(employeeId);
-        Iterable<Integer> hoursWorked = repository.getHoursWorked(employeeId, year, month);
-        int totalWorkedHours = 0;
-        for (int item : hoursWorked)
-            totalWorkedHours += item;
-        salary = totalWorkedHours * hourlyRate;
+        Employee employee = repository.getById(employeeId);
+        salary = employee.getTotalWorkedHours() * employee.getHourlyRate();
     }
 
     public double getSalary() {

@@ -28,7 +28,10 @@ public class Employee {
         workedHours.add(hoursWorked);
     }
 
-    public Iterable<Integer> getWorkedHours() {
-        return workedHours;
+    public int getTotalWorkedHours() {
+        int totalWorkedHours = 0;
+        for (int h : workedHours)
+            totalWorkedHours += h;
+        return totalWorkedHours;
     }
 }

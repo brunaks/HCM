@@ -3,16 +3,18 @@ package bmw;
 public class CreateEmployeeUseCase implements UseCase {
     private double hourlyRate;
     private String id;
-    private Repository repository;
+    private EmployeeRepository repository;
 
-    public CreateEmployeeUseCase(double hourlyRate, Repository repository) {
+    public CreateEmployeeUseCase(double hourlyRate, EmployeeRepository repository) {
         this.hourlyRate = hourlyRate;
         this.repository = repository;
     }
 
     public void execute() {
         id = repository.createId();
-        repository.saveEmployee(id, hourlyRate);
+        Employee employee = new Employee(id);
+        employee.setHourlyRate(hourlyRate);
+        repository.save(employee);
     }
 
     public String getEmployeeId() {
