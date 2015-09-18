@@ -3,7 +3,7 @@ package bmw;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee {
+public class HourlyEmployee {
     public static final double EXTRA_PAY_RATE = 1.5;
     public static final int MAX_NORMAL_HOURS = 8;
     private String name;
@@ -11,11 +11,11 @@ public class Employee {
     private double hourlyRate;
     List<Integer> workedHours;
 
-    public Employee(String employeeId) {
+    public HourlyEmployee(String employeeId) {
         this(employeeId, "", 0.0, new ArrayList<>());
     }
 
-    private Employee(String id, String name, double hourlyRate, List<Integer> workedHours) {
+    private HourlyEmployee(String id, String name, double hourlyRate, List<Integer> workedHours) {
         this.id = id;
         this.name = name;
         this.hourlyRate = hourlyRate;
@@ -43,19 +43,19 @@ public class Employee {
         workedHours.add(hoursWorked);
     }
 
-    public Employee copy() {
-        return new Employee(id, name, hourlyRate, workedHours);
+    public HourlyEmployee copy() {
+        return new HourlyEmployee(id, name, hourlyRate, workedHours);
     }
 
     double calculateSalary() {
-        double salary = 0.0;
-        for (int hoursWorked : workedHours)
-            salary += calculateDaySalary(hoursWorked);
-        return salary;
+        return getTotalPaidHours() * hourlyRate;
     }
 
-    private double calculateDaySalary(int hoursWorked) {
-        return hourlyRate * toPaidHours(hoursWorked);
+    private double getTotalPaidHours() {
+        double totalPaidHours = 0;
+        for (int hoursWorked : workedHours)
+            totalPaidHours += toPaidHours(hoursWorked);
+        return totalPaidHours;
     }
 
     private double toPaidHours(int hoursWorked) {

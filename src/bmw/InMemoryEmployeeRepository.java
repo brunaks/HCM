@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class InMemoryEmployeeRepository implements EmployeeRepository {
     private static int incrementalId;
-    private Map<String, Employee> employeesSaved = new HashMap<>();
+    private Map<String, HourlyEmployee> employeesSaved = new HashMap<>();
 
     public String createId() {
         return String.valueOf(++incrementalId);
     }
 
-    public void save(Employee employee) {
+    public void save(HourlyEmployee employee) {
         employeesSaved.put(employee.getId(), employee.copy());
     }
 
-    public Employee getById(String employeeId) {
+    public HourlyEmployee getById(String employeeId) {
         return employeesSaved.get(employeeId).copy();
     }
 }

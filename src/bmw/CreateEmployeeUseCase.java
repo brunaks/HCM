@@ -12,7 +12,7 @@ public class CreateEmployeeUseCase implements UseCase {
 
     public void execute() {
         id = repository.createId();
-        Employee employee = new Employee(id);
+        HourlyEmployee employee = new HourlyEmployee(id);
         employee.setHourlyRate(hourlyRate);
         repository.save(employee);
     }

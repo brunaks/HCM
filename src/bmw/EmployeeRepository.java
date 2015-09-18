@@ -3,7 +3,7 @@ package bmw;
 public interface EmployeeRepository {
     String createId();
 
-    void save(Employee employee);
+    void save(HourlyEmployee employee);
 
-    Employee getById(String employeeId);
+    HourlyEmployee getById(String employeeId);
 }
