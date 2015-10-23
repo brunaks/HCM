@@ -19,7 +19,8 @@ public class CreateTimeCard implements UseCase {
 
     public void execute() {
         HourlyEmployee employee = repository.getById(employeeId);
-        employee.addWorkedHours(hoursWorked);
+        TimeCard timeCard = new TimeCard(hoursWorked, day, month, year);
+        employee.addTimeCard(timeCard);
         repository.save(employee);
     }
 }

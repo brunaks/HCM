@@ -16,7 +16,7 @@ public class CalculateSalaryUseCase implements UseCase {
 
     public void execute() {
         HourlyEmployee employee = repository.getById(employeeId);
-        salary = employee.calculateSalary();
+        salary = employee.calculateSalary(year, month);
     }
 
     public double getSalary() {

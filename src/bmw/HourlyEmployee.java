@@ -9,18 +9,18 @@ public class HourlyEmployee {
     private String name;
     private String id;
     private double hourlyRate;
-    List<Integer> workedHours;
+    List<TimeCard> timeCards;
 
     public HourlyEmployee(String employeeId) {
         this(employeeId, "", 0.0, new ArrayList<>());
     }
 
-    private HourlyEmployee(String id, String name, double hourlyRate, List<Integer> workedHours) {
+    private HourlyEmployee(String id, String name, double hourlyRate, List<TimeCard> timeCards) {
         this.id = id;
         this.name = name;
         this.hourlyRate = hourlyRate;
-        this.workedHours = new ArrayList<>();
-        this.workedHours.addAll(workedHours);
+        this.timeCards = new ArrayList<>();
+        this.timeCards.addAll(timeCards);
     }
 
     public String getName() {
@@ -39,38 +39,40 @@ public class HourlyEmployee {
         this.hourlyRate = hourlyRate;
     }
 
-    public void addWorkedHours(int hoursWorked) {
-        workedHours.add(hoursWorked);
+    public void addTimeCard(TimeCard timeCard) {
+        this.timeCards.add(timeCard);
     }
 
     public HourlyEmployee copy() {
-        return new HourlyEmployee(id, name, hourlyRate, workedHours);
+        return new HourlyEmployee(id, name, hourlyRate, timeCards);
     }
 
-    double calculateSalary() {
-        return getTotalPaidHours() * hourlyRate;
+    double calculateSalary(int year, int month) {
+        return getTotalPaidHours(getTimeCardsForPeriod(month, year)) * hourlyRate;
     }
 
-    private double getTotalPaidHours() {
-        double totalPaidHours = 0;
-        for (int hoursWorked : workedHours)
-            totalPaidHours += toPaidHours(hoursWorked);
-        return totalPaidHours;
+    private List<TimeCard> getTimeCardsForPeriod(int month, int year) {
+        List<TimeCard> timeCardsForPeriod = new ArrayList<>();
+        for (TimeCard timeCard : timeCards)
+            if (timeCard.getMonth() == month && timeCard.getYear() == year)
+                timeCardsForPeriod.add(timeCard);
+        return timeCardsForPeriod;
     }
 
-    private double toPaidHours(int hoursWorked) {
-        if (hasExtraHours(hoursWorked))
-            return applyExtraPayRate(hoursWorked);
+    private double getTotalPaidHours(List<TimeCard> timeCardsForPeriod) {
+        int totalWorkedHours = getTotalWorkedHours(timeCardsForPeriod);
+        int totalExpectedHours = MAX_NORMAL_HOURS * timeCardsForPeriod.size();
+
+        if (totalWorkedHours > totalExpectedHours)
+            return totalExpectedHours + ((totalWorkedHours - totalExpectedHours) * EXTRA_PAY_RATE);
         else
-            return hoursWorked;
+            return totalWorkedHours;
     }
 
-    private boolean hasExtraHours(int hoursWorked) {
-        return hoursWorked > MAX_NORMAL_HOURS;
-    }
-
-    private double applyExtraPayRate(int hoursWorked) {
-        int extraHours = hoursWorked - MAX_NORMAL_HOURS;
-        return MAX_NORMAL_HOURS + (extraHours * EXTRA_PAY_RATE);
+    private int getTotalWorkedHours(List<TimeCard> timeCardsForPeriod) {
+        int totalWorkedHours = 0;
+        for (TimeCard timeCard : timeCardsForPeriod)
+            totalWorkedHours += timeCard.getHoursWorked();
+        return totalWorkedHours;
     }
 }
