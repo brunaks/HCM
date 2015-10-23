@@ -91,6 +91,15 @@ public class CalculateSalaryTest {
         thenTheSalaryShouldBe(8 * 22.73);
     }
 
+    @Ignore
+    @Test
+    public void employeeHasHoursWorkedOnASaturday_HoursMuBePayedTimeAndAHalf() {
+        String id = givenEmployee(22.73);
+        givenTimeCard(id, 8, 24, 10, 2015);
+        whenCalculatingSalaryOf(id, 10, 2015);
+        thenTheSalaryShouldBe((8 * 1.5) * 22.73);
+    }
+
 
     private String givenEmployee(double hourlyRate) {
         createEmployee = new CreateEmployeeUseCase(hourlyRate, repository);
